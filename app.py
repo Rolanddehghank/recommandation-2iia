@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# 🔹 Création du dataset avec des produits plus variés
+# 🔹 Création du dataset avec catégories bien définies
 data = pd.DataFrame({
     'Produit': [
         'Chaussures de Sport', 'Baskets Running', 'Sac de Sport', 'Montre Fitness', 'Bouteille Isotherme',
@@ -11,21 +11,21 @@ data = pd.DataFrame({
         'Aspirateur Robot', 'Table Basse', 'Lampe LED', 'Jeu Vidéo', 'Écouteurs Sans Fil'
     ],
     'Description': [
-        'Chaussures confortables pour le sport et la marche',
-        'Baskets légères adaptées au running et au sport',
-        'Sac pratique pour transporter ses affaires de sport',
-        'Montre connectée pour le suivi d’activité sportive',
-        'Bouteille isotherme idéale pour le sport et la randonnée',
-        'Casque sans fil avec réduction de bruit pour la musique',
-        'Ordinateur portable performant pour le travail et le gaming',
-        'Clavier mécanique RGB pour une meilleure frappe et gaming',
-        'Écran 27 pouces Full HD idéal pour travail et gaming',
-        'Smartphone dernière génération avec connectivité 5G',
-        'Aspirateur robot intelligent pour un nettoyage autonome',
-        'Table basse design pour un salon moderne',
-        'Lampe LED réglable pour un éclairage d’ambiance',
-        'Jeu vidéo immersif pour console et PC',
-        'Écouteurs sans fil avec réduction de bruit et autonomie longue'
+        'Chaussures légères et confortables pour la course',
+        'Baskets running ultra légères pour performances optimales',
+        'Sac de sport imperméable avec compartiments multiples',
+        'Montre connectée avec suivi d’activité et GPS',
+        'Bouteille isotherme pour boissons chaudes et froides',
+        'Casque Bluetooth avec réduction de bruit active',
+        'Ordinateur portable performant pour gaming et travail',
+        'Clavier mécanique rétroéclairé avec switches rapides',
+        'Écran Full HD 27 pouces pour une expérience visuelle immersive',
+        'Smartphone dernière génération avec appareil photo avancé',
+        'Aspirateur robot autonome avec programmation intelligente',
+        'Table basse en bois massif avec espace de rangement',
+        'Lampe LED avec intensité réglable et mode veilleuse',
+        'Jeu vidéo immersif avec graphismes haute résolution',
+        'Écouteurs sans fil avec autonomie prolongée'
     ],
     'Catégorie': [
         'Sport', 'Sport', 'Sport', 'Sport', 'Sport',
@@ -51,32 +51,26 @@ tfidf_matrix = vectorizer.fit_transform(data['Description'])
 # 🔹 Calculer la similarité cosinus entre les produits
 similarity_matrix = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-# 🔹 Fonction de recommandation améliorée (meilleure diversité)
+# 🔹 Fonction de recommandation améliorée (bloque le mélange des catégories)
 def recommander_produits(nom_produit, data, similarity_matrix, top_n=3):
+    # Trouver l’index du produit sélectionné
     idx = data[data['Produit'] == nom_produit].index[0]
+    
+    # Calculer la similarité avec les autres produits
     scores = list(enumerate(similarity_matrix[idx]))
     scores = sorted(scores, key=lambda x: x[1], reverse=True)[1:]  # Exclure le produit lui-même
-    
-    # Sélectionner les produits les plus pertinents avec des catégories variées
-    recommandations = []
-    categories_vues = set()
-    
-    for i, score in scores:
-        produit_reco = data.iloc[i]
-        if produit_reco["Catégorie"] not in categories_vues:
-            recommandations.append(produit_reco)
-            categories_vues.add(produit_reco["Catégorie"])
-        
-        if len(recommandations) >= top_n:
-            break
+
+    # 🔥 Bloquer le mélange des catégories
+    categorie = data.loc[idx, "Catégorie"]
+    recommandations = [data.iloc[i[0]] for i in scores if data.iloc[i[0]]["Catégorie"] == categorie][:top_n]
     
     return recommandations
 
 # 🔹 Interface utilisateur avec Streamlit
-st.title("🛒 Recommandation de Produits Variés")
+st.title("🛒 Recommandation de Produits par Catégorie")
 st.write("""
 💡 **Comment ça marche ?**  
-Sélectionnez un produit, et nous vous recommanderons **des articles variés mais cohérents**, selon vos préférences.
+Sélectionnez un produit, et nous vous recommanderons uniquement des articles de la même catégorie.
 """)
 
 # 🔹 Sélecteur de produit
