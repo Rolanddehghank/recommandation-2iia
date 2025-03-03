@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# 🔹 Création du dataset avec produits, descriptions et images
+# 🔹 Création du dataset avec produits, descriptions et catégories
 data = pd.DataFrame({
     'Produit': ['Chaussures Sport', 'Baskets Running', 'Sac de Sport', 'Montre Fitness', 'Bouteille d’eau', 'Casque Audio'],
     'Description': [
@@ -14,6 +14,7 @@ data = pd.DataFrame({
         'Bouteille isotherme idéale pour le sport et la randonnée',
         'Casque sans fil avec réduction de bruit pour la musique'
     ],
+    'Catégorie': ['Sport', 'Sport', 'Sport', 'Tech', 'Sport', 'Tech'],  # Ajout des catégories
     'Image': [
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
@@ -25,26 +26,29 @@ data = pd.DataFrame({
 })
 
 # 🔹 Transformer les descriptions en vecteurs numériques (TF-IDF)
-vectorizer = TfidfVectorizer()
+vectorizer = TfidfVectorizer(stop_words='french')  # Suppression des mots inutiles
 tfidf_matrix = vectorizer.fit_transform(data['Description'])
 
 # 🔹 Calculer la similarité cosinus entre les produits
 similarity_matrix = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-# 🔹 Fonction de recommandation
+# 🔹 Fonction de recommandation avec filtre par catégorie
 def recommander_produits(nom_produit, data, similarity_matrix, top_n=3):
     idx = data[data['Produit'] == nom_produit].index[0]
     scores = list(enumerate(similarity_matrix[idx]))
-    scores = sorted(scores, key=lambda x: x[1], reverse=True)[1:top_n+1]
+    scores = sorted(scores, key=lambda x: x[1], reverse=True)[1:]  # Exclure le produit lui-même
     
-    recommandations = [data.iloc[i[0]] for i in scores]
+    # Filtrer pour garder uniquement les produits de la même catégorie
+    categorie = data.loc[idx, "Catégorie"]
+    recommandations = [data.iloc[i[0]] for i in scores if data.iloc[i[0]]["Catégorie"] == categorie][:top_n]
+    
     return recommandations
 
 # 🔹 Interface utilisateur avec Streamlit
 st.title("🛒 Recommandation de Produits")
 st.write("""
 💡 **Comment ça marche ?**  
-Sélectionnez un produit, et nous vous recommanderons d’autres articles similaires basés sur leur description.
+Sélectionnez un produit, et nous vous recommanderons d’autres articles similaires **dans la même catégorie**.
 """)
 
 # 🔹 Sélecteur de produit
@@ -64,7 +68,3 @@ if produit_selectionne:
         with cols[i]:  # Affichage en colonnes
             st.image(rec['Image'], width=120)
             st.write(f"**{rec['Produit']}**")
-
-# 🔹 Bouton pour relancer une nouvelle recommandation
-if st.button("🔄 Relancer la recommandation"):
-    st.rerun()
