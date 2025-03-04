@@ -33,21 +33,21 @@ data = pd.DataFrame({
         'Maison', 'Maison', 'Maison', 'Divertissement', 'Tech'
     ],
     'Image': [
-        'https://example.com/images/chaussures_sport.jpg',
-        'https://example.com/images/baskets_running.jpg',
-        'https://example.com/images/sac_sport.jpg',
-        'https://example.com/images/montre_fitness.jpg',
-        'https://example.com/images/bouteille_isotherme.jpg',
-        'https://example.com/images/casque_audio.jpg',
-        'https://example.com/images/pc_portable.jpg',
-        'https://example.com/images/clavier_mecanique.jpg',
-        'https://example.com/images/ecran_27p.jpg',
-        'https://example.com/images/smartphone_5g.jpg',
-        'https://example.com/images/aspirateur_robot.jpg',
-        'https://example.com/images/table_basse.jpg',
-        'https://example.com/images/lampe_led.jpg',
-        'https://example.com/images/jeu_video.jpg',
-        'https://example.com/images/ecouteurs_sansfil.jpg'
+        'https://www.2iia.com/TOWERS/img/chaussures_sport.jpg',
+        'https://www.2iia.com/TOWERS/img/baskets_running.jpg',
+        'https://www.2iia.com/TOWERS/img/sac_sport.jpg',
+        'https://www.2iia.com/TOWERS/img/montre_fitness.jpg',
+        'https://www.2iia.com/TOWERS/img/bouteille_isotherme.jpg',
+        'https://www.2iia.com/TOWERS/img/casque_audio.jpg',
+        'https://www.2iia.com/TOWERS/img/pc_portable.jpg',
+        'https://www.2iia.com/TOWERS/img/clavier_mecanique.jpg',
+        'https://www.2iia.com/TOWERS/img/ecran_27p.jpg',
+        'https://www.2iia.com/TOWERS/img/smartphone_5g.jpg',
+        'https://www.2iia.com/TOWERS/img/aspirateur_robot.jpg',
+        'https://www.2iia.com/TOWERS/img/table_basse.jpg',
+        'https://www.2iia.com/TOWERS/img/lampe_led.jpg',
+        'https://www.2iia.com/TOWERS/img/jeu_video.jpg',
+        'https://www.2iia.com/TOWERS/img/ecouteurs_sansfil.jpg'
     ]
 })
 
