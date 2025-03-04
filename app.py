@@ -33,21 +33,21 @@ data = pd.DataFrame({
         'Maison', 'Maison', 'Maison', 'Divertissement', 'Tech'
     ],
     'Image': [
-        'https://www.2iia.com/TOWERS/img/chaussures_sport.jpg',
-        'https://www.2iia.com/TOWERS/img/baskets_running.jpg',
-        'https://www.2iia.com/TOWERS/img/sac_sport.jpg',
-        'https://www.2iia.com/TOWERS/img/montre_fitness.jpg',
-        'https://www.2iia.com/TOWERS/img/bouteille_isotherme.jpg',
-        'https://www.2iia.com/TOWERS/img/casque_audio.jpg',
-        'https://www.2iia.com/TOWERS/img/pc_portable.jpg',
-        'https://www.2iia.com/TOWERS/img/clavier_mecanique.jpg',
-        'https://www.2iia.com/TOWERS/img/ecran_27p.jpg',
-        'https://www.2iia.com/TOWERS/img/smartphone_5g.jpg',
-        'https://www.2iia.com/TOWERS/img/aspirateur_robot.jpg',
-        'https://www.2iia.com/TOWERS/img/table_basse.jpg',
-        'https://www.2iia.com/TOWERS/img/lampe_led.jpg',
-        'https://www.2iia.com/TOWERS/img/jeu_video.jpg',
-        'https://www.2iia.com/TOWERS/img/ecouteurs_sansfil.jpg'
+        'https://2iia.com/TOWERS/img/chaussures_sport.jpg',
+        'https://2iia.com/TOWERS/img/baskets_running.jpg',
+        'https://2iia.com/TOWERS/img/sac_sport.jpg',
+        'https://2iia.com/TOWERS/img/montre_fitness.jpg',
+        'https://2iia.com/TOWERS/img/bouteille_isotherme.jpg',
+        'https://2iia.com/TOWERS/img/casque_audio.jpg',
+        'https://2iia.com/TOWERS/img/pc_portable.jpg',
+        'https://2iia.com/TOWERS/img/clavier_mecanique.jpg',
+        'https://2iia.com/TOWERS/img/ecran_27p.jpg',
+        'https://2iia.com/TOWERS/img/smartphone_5g.jpg',
+        'https://2iia.com/TOWERS/img/aspirateur_robot.jpg',
+        'https://2iia.com/TOWERS/img/table_basse.jpg',
+        'https://2iia.com/TOWERS/img/lampe_led.jpg',
+        'https://2iia.com/TOWERS/img/jeu_video.jpg',
+        'https://2iia.com/TOWERS/img/ecouteurs_sansfil.jpg'
     ]
 })
 
