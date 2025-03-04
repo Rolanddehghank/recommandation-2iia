@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# 🔹 Création du dataset avec catégories bien définies
+# 🔹 Création du dataset avec des images réelles
 data = pd.DataFrame({
     'Produit': [
         'Chaussures de Sport', 'Baskets Running', 'Sac de Sport', 'Montre Fitness', 'Bouteille Isotherme',
@@ -33,14 +33,21 @@ data = pd.DataFrame({
         'Maison', 'Maison', 'Maison', 'Divertissement', 'Tech'
     ],
     'Image': [
-        'https://via.placeholder.com/150', 'https://via.placeholder.com/150', 
-        'https://via.placeholder.com/150', 'https://via.placeholder.com/150', 
-        'https://via.placeholder.com/150', 'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150', 'https://via.placeholder.com/150', 
-        'https://via.placeholder.com/150', 'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150', 'https://via.placeholder.com/150', 
-        'https://via.placeholder.com/150', 'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150'
+        'https://example.com/images/chaussures_sport.jpg',
+        'https://example.com/images/baskets_running.jpg',
+        'https://example.com/images/sac_sport.jpg',
+        'https://example.com/images/montre_fitness.jpg',
+        'https://example.com/images/bouteille_isotherme.jpg',
+        'https://example.com/images/casque_audio.jpg',
+        'https://example.com/images/pc_portable.jpg',
+        'https://example.com/images/clavier_mecanique.jpg',
+        'https://example.com/images/ecran_27p.jpg',
+        'https://example.com/images/smartphone_5g.jpg',
+        'https://example.com/images/aspirateur_robot.jpg',
+        'https://example.com/images/table_basse.jpg',
+        'https://example.com/images/lampe_led.jpg',
+        'https://example.com/images/jeu_video.jpg',
+        'https://example.com/images/ecouteurs_sansfil.jpg'
     ]
 })
 
@@ -51,16 +58,13 @@ tfidf_matrix = vectorizer.fit_transform(data['Description'])
 # 🔹 Calculer la similarité cosinus entre les produits
 similarity_matrix = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-# 🔹 Fonction de recommandation améliorée (bloque le mélange des catégories)
+# 🔹 Fonction de recommandation améliorée
 def recommander_produits(nom_produit, data, similarity_matrix, top_n=3):
-    # Trouver l’index du produit sélectionné
     idx = data[data['Produit'] == nom_produit].index[0]
-    
-    # Calculer la similarité avec les autres produits
     scores = list(enumerate(similarity_matrix[idx]))
     scores = sorted(scores, key=lambda x: x[1], reverse=True)[1:]  # Exclure le produit lui-même
 
-    # 🔥 Bloquer le mélange des catégories
+    # 🔥 Filtrer pour recommander uniquement dans la même catégorie
     categorie = data.loc[idx, "Catégorie"]
     recommandations = [data.iloc[i[0]] for i in scores if data.iloc[i[0]]["Catégorie"] == categorie][:top_n]
     
@@ -83,9 +87,9 @@ if produit_selectionne:
     if not recommandations:
         st.warning("❌ Aucun produit similaire trouvé.")
     else:
-        st.success(f"📢 Si vous aimez **{produit_selectionne}**, vous pourriez aussi aimer :")
+        st.success(f"Si vous aimez **{produit_selectionne}**, vous pourriez aussi aimer :")
 
-        # 🔹 Affichage des recommandations en colonnes
+        # 🔹 Affichage des recommandations en colonnes avec images
         col1, col2, col3 = st.columns(3)
         cols = [col1, col2, col3]
 
